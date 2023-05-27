@@ -2,7 +2,7 @@
 const nextConfig = {
   reactStrictMode: true,
   images: {
-    domains: ['images.unsplash.com'],
+    domains: ['black_hole-3kf-1-f5582790.deta.app'],
   }
 }
 
