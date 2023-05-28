@@ -80,6 +80,4 @@ export default function ImagesGrid() {
       }
     </div>
   )
-
-  // aqui em baixo
 }

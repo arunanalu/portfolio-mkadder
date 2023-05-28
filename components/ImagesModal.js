@@ -44,6 +44,7 @@ export default function ImagesModal({
           showFullscreenButton={true}
           startIndex={selectedImageIndex}
           slideDuration={0}
+          lazyLoad={true}
         />
       </Modal>
     </div>
