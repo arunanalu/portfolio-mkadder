@@ -9,8 +9,6 @@ export default function ImagesGrid() {
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
   const [imagesUrls, setImagesUrls] = useState([]);
 
-  console.log('imagesUrls', imagesUrls)
-
   function handleImageClick(index) {
     setSelectedImageIndex(index);
     setModalIsOpen(true);
@@ -41,18 +39,6 @@ export default function ImagesGrid() {
     }
     fetchData()
   }, [])
-
-  useEffect(() => {
-    if (imagesUrls.length !== 0) {
-      overridMansoryCss()
-    }
-  }, [imagesUrls])
-
-  function overridMansoryCss() {
-    const mansory = document.querySelector('.mansory-ct')
-    const firstChild = mansory.children[0]
-    firstChild.style.alignItems = 'center'
-  }
 
   return (
     <div>

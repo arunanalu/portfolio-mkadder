@@ -29,3 +29,11 @@ body {
     )
     rgb(var(--background-start-rgb));
 }
+
+.mansory-ct > *:first-child {
+  align-items: center;
+}
+
+.main-title {
+  font-family: 'Cinzel Decorative', cursive;
+}
