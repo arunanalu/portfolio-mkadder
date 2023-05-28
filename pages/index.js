@@ -8,10 +8,8 @@ const inter = Inter({ subsets: ['latin'] })
 export default function Home() {
 
   return (
-    <main className='flex-col content-center justify-center'>
-      <div className='gallery-ct w-[85%] sm:w-[80%] 2xl:w-[1264px] m-auto'>
-        <ImagesGrid />
-      </div>
+    <main className='gallery-ct w-[85%] sm:w-[80%] 2xl:w-[1264px] m-auto'>
+      <ImagesGrid />
     </main>
   )
 }
