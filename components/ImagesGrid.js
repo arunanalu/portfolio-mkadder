@@ -64,7 +64,7 @@ export default function ImagesGrid({ imagesUrls }) {
                 from: { transform: "scale(1)", opacity: 0 },
                 enter: { transform: "scale(1)", opacity: 1 },
                 leave: { transform: "scale(1)", opacity: 0 },
-                config: { mass: 1, tension: 520, friction: 32 }
+                config: { mass: 1, tension: 820, friction: 32 }
               }}
             />
             <ResponsiveMasonry
