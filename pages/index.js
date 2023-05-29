@@ -12,7 +12,7 @@ export default function Home({ imagesUrls, teste }) {
   )
 }
 
-export async function getServerSideProps() {
+export async function getStaticProps() {
   const url = process.env.NEXT_PUBLIC_API_URL
   const token = process.env.NEXT_PUBLIC_API_TOKEN
   let data = await fetch(`${url}/api/photos/?limit=10&offset=0`, {
@@ -32,6 +32,7 @@ export async function getServerSideProps() {
   return {
     props: {
       imagesUrls,
-    }
+    },
+    revalidate: 10,
   }
 }

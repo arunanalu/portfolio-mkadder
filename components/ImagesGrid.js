@@ -33,7 +33,7 @@ export default function ImagesGrid({ imagesUrls }) {
       }
       {
         imagesUrls && (
-          <div>
+          <div className="">
             <Lightbox 
               open={modalIsOpen}
               close={() => setModalIsOpen(false)}
