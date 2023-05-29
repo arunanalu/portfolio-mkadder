@@ -1,5 +1,6 @@
 import Modal from 'react-modal';
 import ImageGallery from 'react-image-gallery';
+import { AiOutlineClose } from "react-icons/ai";
 
 export default function ImagesModal({
   modalIsOpen,
@@ -11,7 +12,6 @@ export default function ImagesModal({
   const modalStyle = {
     overlay: {
       backgroundColor: 'rgba(0, 0, 0, 0.75)',
-      zIndex: '1000'
     },
     content: {
       top: '50%',
@@ -20,10 +20,12 @@ export default function ImagesModal({
       bottom: 'auto',
       marginRight: '-50%',
       transform: 'translate(-50%, -50%)',
-      padding: 0,
+      padding: '10px',
       border: 'none',
       width: 'auto',
       height: 'auto',
+      overflow: 'visible',
+      backgroundColor: 'rgba(0, 0, 0, 0)',
     }
   };
 
@@ -37,6 +39,11 @@ export default function ImagesModal({
         shouldFocusAfterRender={true}
         ariaHideApp={false}
       >
+        <button 
+          onClick={closeModal}
+          className='absolute flex items-center justify-center z-10 w-8 h-8 top-[0px] right-[0px] bg-gradient-to-br from-purple-700 to-pink-700 rounded'>
+          <AiOutlineClose />
+        </button>
         <ImageGallery
           items={jsonImages}
           showNav={true}
@@ -44,7 +51,6 @@ export default function ImagesModal({
           showFullscreenButton={true}
           startIndex={selectedImageIndex}
           slideDuration={0}
-          lazyLoad={true}
         />
       </Modal>
     </div>

@@ -33,6 +33,7 @@ export default function ImagesGrid() {
           id: item.id,
           name: item.file_name,
           original: `${process.env.NEXT_PUBLIC_API_URL}/api${item.url}/`,
+          // thumbnail: `${process.env.NEXT_PUBLIC_API_URL}/api${item.thumbnail}`
         }
       })
       setImagesUrls(imagesUrls)
@@ -46,10 +47,10 @@ export default function ImagesGrid() {
         imagesUrls.length !== 0 && (
           <div>
             <ImagesModal 
-            modalIsOpen={modalIsOpen} 
-            closeModal={closeModal}
-            selectedImageIndex={selectedImageIndex}
-            jsonImages={imagesUrls}
+              modalIsOpen={modalIsOpen} 
+              closeModal={closeModal}
+              selectedImageIndex={selectedImageIndex}
+              jsonImages={imagesUrls}
             />
             <ResponsiveMasonry
               columnsCountBreakPoints={{ 350: 1, 750: 2, 1050: 3 }}
@@ -68,7 +69,8 @@ export default function ImagesGrid() {
                         height={400}
                         className="rounded-lg"
                         onClick={() => handleImageClick(index)}
-                        priority={true}
+                        placeholder="blur"
+                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN0/w8AAZMBSGia0bUAAAAASUVORK5CYII="
                       />
                     </div>
                   ))
