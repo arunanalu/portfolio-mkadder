@@ -32,6 +32,7 @@ export async function getStaticProps() {
   return {
     props: {
       imagesUrls,
-    }
+    },
+    revalidate: 60,
   }
 }
