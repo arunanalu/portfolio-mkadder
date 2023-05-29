@@ -1,4 +1,4 @@
-import Image from "next/image";
+import NextImage from "next/image";
 import { useEffect, useState } from 'react';
 import ImagesModal from "./ImagesModal";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
@@ -33,8 +33,12 @@ export default function ImagesGrid() {
           id: item.id,
           name: item.file_name,
           original: `${process.env.NEXT_PUBLIC_API_URL}/api${item.url}/`,
-          // thumbnail: `${process.env.NEXT_PUBLIC_API_URL}/api${item.thumbnail}`
         }
+      })
+      // preload images from imagesUrls array in the browser
+      imagesUrls.forEach(image => {
+        const img = new Image()
+        img.src = image.original
       })
       setImagesUrls(imagesUrls)
     }
@@ -46,7 +50,7 @@ export default function ImagesGrid() {
       {
         imagesUrls.length !== 0 && (
           <div>
-            <ImagesModal 
+            <ImagesModal
               modalIsOpen={modalIsOpen} 
               closeModal={closeModal}
               selectedImageIndex={selectedImageIndex}
@@ -62,7 +66,7 @@ export default function ImagesGrid() {
                 {
                   imagesUrls.map((image, index) => (
                     <div key={image.id} className="relative">
-                      <Image
+                      <NextImage
                         src={image.original}
                         alt={image.name}
                         width={400}

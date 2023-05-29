@@ -28,7 +28,7 @@ const Navbar = () => {
               return (
                 <li className="flex flex-col items-center w-full sm:w-auto" key={link.name}>
                   <Link
-                    className={`select-none menulink sm:text-xl font-semibold ${defineClassName(link.href)}`}
+                    className={`select-none menulink sm:text-xl font-semibold hover:text-gray-100 ${defineClassName(link.href)}`}
                     href={link.href}
                   >
                     {t(link.name).toUpperCase()}
