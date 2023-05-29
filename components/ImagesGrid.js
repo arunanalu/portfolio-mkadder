@@ -1,63 +1,54 @@
 import NextImage from "next/image";
 import { useEffect, useState } from 'react';
-import ImagesModal from "./ImagesModal";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { AiOutlineLoading } from "react-icons/ai";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import NextJsImage from "./NextJsImage";
+import { Zoom } from "yet-another-react-lightbox/plugins";
 
-export default function ImagesGrid() {
+export default function ImagesGrid({ imagesUrls }) {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [imagesUrls, setImagesUrls] = useState([]);
 
   function handleImageClick(index) {
     setSelectedImageIndex(index);
     setModalIsOpen(true);
   }
 
-  function closeModal() {
-    setModalIsOpen(false);
-  }
-
   useEffect(() => {
-    async function fetchData() {
-      let dataImages = await fetch('/api/images', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ limit: 10, offset: 0 })
-      })
-      dataImages = await dataImages.json()
-      const imagesUrls = dataImages.items.map((item) => {
-        const img = new Image()
-        img.src = `${process.env.NEXT_PUBLIC_API_URL}/api${item.url}/`
-        return {
-          id: item.id,
-          name: item.file_name,
-          original: `${process.env.NEXT_PUBLIC_API_URL}/api${item.url}/`,
-        }
-      })
-      setImagesUrls(imagesUrls)
-    }
-    fetchData()
+    imagesUrls.forEach((image) => {
+      const img = new Image();
+      img.src = image.src;
+    })
   }, [])
 
   return (
     <div>
       {
-        imagesUrls.length === 0 && (
+        !imagesUrls && (
           <AiOutlineLoading size="3em" className="mt-[100px] animate-spin m-auto" />
         )
       }
       {
-        imagesUrls.length !== 0 && (
+        imagesUrls && (
           <div>
-            <ImagesModal
-              modalIsOpen={modalIsOpen} 
-              closeModal={closeModal}
-              selectedImageIndex={selectedImageIndex}
-              jsonImages={imagesUrls}
+            <Lightbox 
+              open={modalIsOpen}
+              close={() => setModalIsOpen(false)}
+              slides={imagesUrls}
+              render={{ slide: NextJsImage }}
+              index={selectedImageIndex}
+              controller={{
+                closeOnBackdropClick: true,
+              }}
+              plugins={[Zoom]}
+              animation={{ 
+                fade: 200,
+                swap: 200,
+                navigation: 200
+              }}
             />
             <ResponsiveMasonry
               columnsCountBreakPoints={{ 350: 1, 750: 2, 1050: 3 }}
@@ -70,8 +61,8 @@ export default function ImagesGrid() {
                   imagesUrls.map((image, index) => (
                     <div key={image.id} className="noSelect relative cursor-pointer select-none">
                       <NextImage
-                        src={image.original}
-                        alt={image.name}
+                        src={image.src}
+                        alt={image.alt}
                         width={400}
                         height={400}
                         className="rounded-lg"
