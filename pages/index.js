@@ -1,6 +1,4 @@
-import Header from '@/components/Header'
 import ImagesGrid from '@/components/ImagesGrid'
-import Navbar from '@/components/Navbar'
 import { Inter } from 'next/font/google'
 
 const inter = Inter({ subsets: ['latin'] })
