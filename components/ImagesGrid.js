@@ -2,6 +2,7 @@ import NextImage from "next/image";
 import { useEffect, useState } from 'react';
 import ImagesModal from "./ImagesModal";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
+import { AiOutlineLoading } from "react-icons/ai";
 
 export default function ImagesGrid() {
 
@@ -28,17 +29,14 @@ export default function ImagesGrid() {
         body: JSON.stringify({ limit: 10, offset: 0 })
       })
       dataImages = await dataImages.json()
-      const imagesUrls = dataImages.items.map(item => {
+      const imagesUrls = dataImages.items.map((item) => {
+        const img = new Image()
+        img.src = `${process.env.NEXT_PUBLIC_API_URL}/api${item.url}/`
         return {
           id: item.id,
           name: item.file_name,
           original: `${process.env.NEXT_PUBLIC_API_URL}/api${item.url}/`,
         }
-      })
-      // preload images from imagesUrls array in the browser
-      imagesUrls.forEach(image => {
-        const img = new Image()
-        img.src = image.original
       })
       setImagesUrls(imagesUrls)
     }
@@ -47,6 +45,11 @@ export default function ImagesGrid() {
 
   return (
     <div>
+      {
+        imagesUrls.length === 0 && (
+          <AiOutlineLoading size="3em" className="mt-[100px] animate-spin m-auto" />
+        )
+      }
       {
         imagesUrls.length !== 0 && (
           <div>
@@ -65,7 +68,7 @@ export default function ImagesGrid() {
               >
                 {
                   imagesUrls.map((image, index) => (
-                    <div key={image.id} className="relative">
+                    <div key={image.id} className="noSelect relative cursor-pointer select-none">
                       <NextImage
                         src={image.original}
                         alt={image.name}
@@ -73,8 +76,8 @@ export default function ImagesGrid() {
                         height={400}
                         className="rounded-lg"
                         onClick={() => handleImageClick(index)}
-                        placeholder="blur"
-                        blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN0/w8AAZMBSGia0bUAAAAASUVORK5CYII="
+                        // placeholder="blur"
+                        // blurDataURL="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mN0/w8AAZMBSGia0bUAAAAASUVORK5CYII="
                       />
                     </div>
                   ))
