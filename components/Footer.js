@@ -7,7 +7,7 @@ const FooterText = dynamic(
 
 const Footer = () => {
   return (
-    <footer className="absolute bottom-[-40px] w-full h-10 flex items-end justify-end">
+    <footer className="absolute bottom-[-60px] w-full h-10 flex items-end justify-end">
       <FooterText />
     </footer>
   )
