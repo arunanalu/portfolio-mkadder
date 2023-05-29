@@ -1,8 +1,11 @@
 import NextImage from "next/image";
 import { useEffect, useState } from 'react';
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
-import { AiOutlineLoading, AiOutlineClose } from "react-icons/ai";
-import Lightbox from "react-spring-lightbox";
+import { AiOutlineLoading } from "react-icons/ai";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+import NextJsImage from "./NextJsImage";
+import { Zoom } from "yet-another-react-lightbox/plugins";
 
 export default function ImagesGrid({ imagesUrls }) {
 
@@ -13,17 +16,6 @@ export default function ImagesGrid({ imagesUrls }) {
     setSelectedImageIndex(index);
     setModalIsOpen(true);
   }
-
-  function closeModal() {
-    setModalIsOpen(false);
-  }
-
-  const gotoPrevious = () =>
-    selectedImageIndex > 0 && setSelectedImageIndex(selectedImageIndex - 1);
-
-  const gotoNext = () =>
-    selectedImageIndex + 1 < imagesUrls.length &&
-    setSelectedImageIndex(selectedImageIndex + 1);
 
   useEffect(() => {
     imagesUrls.forEach((image) => {
@@ -43,28 +35,19 @@ export default function ImagesGrid({ imagesUrls }) {
         imagesUrls && (
           <div>
             <Lightbox 
-              isOpen={modalIsOpen}
-              onPrev={gotoPrevious}
-              onNext={gotoNext}
-              onClose={closeModal}
-              images={imagesUrls}
-              currentIndex={selectedImageIndex}
-              renderImageOverlay={() => (
-                <button 
-                  onClick={closeModal}
-                  className='noSelect cursor-pointer absolute flex items-center justify-center z-10 w-8 h-8 top-[0px] right-[0px] bg-gradient-to-br from-purple-700 to-pink-700 rounded-bl-lg'
-                >
-                  <AiOutlineClose />
-                </button>
-              )}
-              style={{ 
-                backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              open={modalIsOpen}
+              close={() => setModalIsOpen(false)}
+              slides={imagesUrls}
+              render={{ slide: NextJsImage }}
+              index={selectedImageIndex}
+              controller={{
+                closeOnBackdropClick: true,
               }}
-              pageTransitionConfig={{
-                from: { transform: "scale(1)", opacity: 0 },
-                enter: { transform: "scale(1)", opacity: 1 },
-                leave: { transform: "scale(1)", opacity: 0 },
-                config: { mass: 1, tension: 820, friction: 32 }
+              plugins={[Zoom]}
+              animation={{ 
+                fade: 200,
+                swap: 200,
+                navigation: 200
               }}
             />
             <ResponsiveMasonry
