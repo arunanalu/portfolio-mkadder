@@ -1,15 +1,13 @@
 import NextImage from "next/image";
 import { useEffect, useState } from 'react';
-import ImagesModal from "./ImagesModal";
 import Masonry, { ResponsiveMasonry } from "react-responsive-masonry";
 import { AiOutlineLoading, AiOutlineClose } from "react-icons/ai";
 import Lightbox from "react-spring-lightbox";
 
-export default function ImagesGrid() {
+export default function ImagesGrid({ imagesUrls }) {
 
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
-  const [imagesUrls, setImagesUrls] = useState([]);
 
   function handleImageClick(index) {
     setSelectedImageIndex(index);
@@ -28,38 +26,21 @@ export default function ImagesGrid() {
     setSelectedImageIndex(selectedImageIndex + 1);
 
   useEffect(() => {
-    async function fetchData() {
-      let dataImages = await fetch('/api/images', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ limit: 10, offset: 0 })
-      })
-      dataImages = await dataImages.json()
-      const imagesUrls = dataImages.items.map((item) => {
-        const img = new Image()
-        img.src = `${process.env.NEXT_PUBLIC_API_URL}/api${item.url}/`
-        return {
-          id: item.id,
-          alt: item.file_name,
-          src: `${process.env.NEXT_PUBLIC_API_URL}/api${item.url}/`,
-        }
-      })
-      setImagesUrls(imagesUrls)
-    }
-    fetchData()
+    imagesUrls.forEach((image) => {
+      const img = new Image();
+      img.src = image.src;
+    })
   }, [])
 
   return (
     <div>
       {
-        imagesUrls.length === 0 && (
+        !imagesUrls && (
           <AiOutlineLoading size="3em" className="mt-[100px] animate-spin m-auto" />
         )
       }
       {
-        imagesUrls.length !== 0 && (
+        imagesUrls && (
           <div>
             <Lightbox 
               isOpen={modalIsOpen}
