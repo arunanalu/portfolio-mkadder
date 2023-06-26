@@ -2,6 +2,7 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import TextComponentWithTranslation from "./TextComponentWithTranslation";
 
 const Navbar = () => {
   const [links] = useState([
@@ -31,7 +32,7 @@ const Navbar = () => {
                     className={`select-none menulink sm:text-xl font-semibold hover:text-gray-100 ${defineClassName(link.href)}`}
                     href={link.href}
                   >
-                    {t(link.name).toUpperCase()}
+                    <TextComponentWithTranslation uppercase={true} textKey={link.name} />
                   </Link>
                   <div className="mt-1 w-12 sm:w-16 md:w-20 h-1 rounded-lg bg-gradient-to-br from-purple-700 to-pink-700" />
                 </li>
